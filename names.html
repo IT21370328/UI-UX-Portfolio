@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI/UX Portfolio | Chenura De Silva</title>
+   
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Unbounded:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg: #050505;
+            --primary: #ffffff;
+            --accent: #ff4d00;
+            --gray: #808080;
+            --card: #0f0f0f;
+            --border: rgba(255, 255, 255, 0.08);
+            --side-padding: 6%;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg); color: var(--primary); font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.4; }
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 20px var(--side-padding);
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 2000; backdrop-filter: blur(15px);
+            background: rgba(5, 5, 5, 0.7); border-bottom: 1px solid var(--border);
+        }
+        .logo { font-weight: 900; font-size: 1.2rem; letter-spacing: -1px; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a { text-decoration: none; color: var(--gray); font-size: 12px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; transition: 0.4s; }
+        .nav-links a:hover { color: var(--accent); }
+        /* Video Background */
+        .video-bg-container {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            z-index: -1; overflow: hidden;
+        }
+        .video-bg-container video {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0.8 ; /* lowered slightly for better text readability */
+        }
+        .video-bg-container::after {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(5,5,5,0.4) 40%, var(--bg) 100%);
+        }
+        /* Hero */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 var(--side-padding);
+            position: relative;
+	    margin-top: 40px;
+            text-align: center;
+        }
+        .hero-title {
+    font-family: 'Unbounded', sans-serif;     
+    font-size: 110px;   
+    font-weight: 900;
+    line-height: 0.82;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+}
+        .hero-row { display: block;  padding-bottom : 10px;}
+        .hero-accent { color: var(--accent); }
+        .tag-pill {
+            display: inline-block; padding: 8px 16px;
+            border: 1px solid var(--accent); color: var(--accent);
+            border-radius: 100px; font-size: 10px; font-weight: 700;
+            text-transform: uppercase; margin-bottom: 24px;
+        }
+        .hero-btns {
+            display: flex; gap: 20px; margin-top: 40px; justify-content: center;
+        }
+        .btn-main {
+            padding: 18px 35px; border-radius: 100px;
+            text-transform: uppercase; font-weight: 700; font-size: 14px;
+            cursor: pointer; transition: 0.4s; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 10px; border: none;
+        }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-primary:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255,77,0,0.3); }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--border); backdrop-filter: blur(10px); }
+        .btn-secondary:hover { background: white; color: black; }
+        /* Common section styles */
+        .section-padding { padding: 120px var(--side-padding) 40px; }
+        .latest-header, .latest-header, .social-header-main h2 {
+            font-size: 80px;
+	    padding-bottom : 40px;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.85;
+            letter-spacing: -0.03em;
+        }
+
+	.process-sticky h2{
+            font-size: 120px;
+	    padding-top: 50px;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.85;
+            letter-spacing: -0.03em;
+        }
+	
+	.contact-left-align h2{
+            font-size: 100px;
+	    padding-top: 50px;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.85;
+            letter-spacing: -0.03em;
+        }
+
+    .behance-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        .project-buttons {
+            position: absolute;
+            bottom: 100px; /* above the title */
+            left: 40px;
+            right: 40px;
+            display: flex;
+            gap: 16px;
+            z-index: 5;
+        }
+
+        .btn-project {
+            flex: 1;
+            padding: 14px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .btn-ui     { background: var(--accent); color: white; }
+        .btn-ui:hover { filter: brightness(1.15); transform: translateY(-2px); }
+
+        .btn-proto  { background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--border); backdrop-filter: blur(10px); }
+        .btn-proto:hover { background: rgba(255,255,255,0.2); }
+
+        /* ── IMAGE MODAL ── */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.92);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 90vw;
+            max-width: 1100px;
+            height: 85vh;
+            background: #0a0a0a;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            font-size: 36px;
+            color: white;
+            cursor: pointer;
+            z-index: 10;
+            background: rgba(0,0,0,0.4);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .close-modal:hover { background: var(--accent); }
+
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 5;
+            transition: 0.3s;
+        }
+
+        .arrow:hover { background: var(--accent); }
+        .arrow.prev { left: 20px; }
+        .arrow.next { right: 20px; }
+
+        /* ── PROTOTYPE MODAL ── */
+        #prototypeModal .modal-content {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #prototypeModal iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 768px) {
+            .project-buttons { 
+                flex-direction: column; 
+                bottom: 80px; 
+                left: 20px; right: 20px; 
+            }
+            .arrow { width: 50px; height: 50px; font-size: 24px; }
+        }
+
+
+        .highlight { color: var(--accent); }
+        /* Project Stack */
+        .project-wrapper { height: 80vh; display: flex; align-items: center; justify-content: center; position: sticky; top: 10vh; margin-bottom: 5vh; }
+        .project-card { width: 100%; height: 75vh; border-radius: 40px; overflow: hidden; background: #0a0a0a; position: relative; border: 1px solid var(--border); }
+        .project-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; transition: 0.8s; }
+        .project-meta { position: absolute; bottom: 0; left: 0; width: 100%; padding: 60px; background: linear-gradient(to top, rgba(5,5,5,1), transparent); }
+        .project-meta h3 { font-size: 40px; font-weight: 900; text-transform: uppercase; }
+        /* Process */
+        .process-section { padding: 160px var(--side-padding); background: #000; }
+        .process-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; }
+        .process-sticky h2 { position: sticky; top: 150px; }
+        .process-list { display: flex; flex-direction: column; gap: 40px; }
+        .process-card { background: var(--card); border: 1px solid var(--border); padding: 60px; border-radius: 40px; opacity: 0.3; transform: translateY(50px) scale(0.9); }
+        .process-num { font-size: 12px; color: var(--accent); font-weight: 900; margin-bottom: 20px; display: block; }
+        .process-card h4 { font-size: 2.5rem; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; }
+        .process-card p { color: var(--gray); font-size: 1.1rem; line-height: 1.6; }
+        /* Behance */
+        .behance-horizontal-section { height: 100vh; overflow: hidden; display: flex; align-items: center; background: #000; position: relative; }
+        .behance-track { display: flex; padding-left: var(--side-padding); gap: 5vw; will-change: transform; }
+        .behance-slide { min-width: 70vw; height: 70vh; border-radius: 40px; overflow: hidden; position: relative; background: var(--card); border: 1px solid var(--border); transform: translateY(100px); opacity: 0.5; }
+        .behance-slide img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s cubic-bezier(0.16,1,0.3,1); }
+        .behance-slide:hover img { transform: scale(1.05); }
+        .behance-info-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); }
+        .behance-info-overlay h4 { font-size: 40px; font-weight: 900; text-transform: uppercase; }
+        /* Social Marquee */
+        .social-marquee-section { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #000; overflow: hidden; border-top: 1px solid var(--border); position: relative; }
+        .marquee-track { display: flex; white-space: nowrap; width: 100%; position: relative; margin-top: 20px; }
+        .marquee-content { display: flex; gap: 100px; padding-left: 30vw; padding-top:100px}
+        .marquee-content a { font-size: 80px; font-weight: 900; color: white; text-decoration: none; transition: 0.4s; text-transform: uppercase; }
+        .marquee-content a:hover { color: var(--accent); }
+        /* Contact */
+        .contact-aligned { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; background: #000; border-top: 1px solid var(--border); padding: 0 var(--side-padding); }
+        .contact-left-align { display: flex; flex-direction: column; justify-content: center; }
+        .contact-right-align { display: flex; flex-direction: column; justify-content: center; align-items: flex-end; text-align: right; }
+        .contact-right-align p { color: var(--gray); font-size: 1.2rem; max-width: 400px; margin-bottom: 40px; }
+        .cta-aligned-group { display: flex; flex-direction: column; gap: 20px; width: 100%; align-items: flex-end; }
+        .action-btn-aligned { width: 100%; max-width: 400px; padding: 30px; border: 1px solid var(--border); border-radius: 20px; display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: white; font-weight: 700; text-transform: uppercase; transition: 0.4s; cursor: pointer; background: transparent; }
+        .action-btn-aligned:hover { border-color: var(--accent); background: rgba(255,77,0,0.05); }
+        .action-btn-aligned.primary { background: var(--accent); border-color: var(--accent); }
+        .contact-tray-aligned { max-height: 0; overflow: hidden; width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 10px; transition: 0.5s cubic-bezier(0.16,1,0.3,1); }
+        .contact-tray-aligned.open { max-height: 200px; margin-top: 10px; }
+        .tray-item-aligned { padding: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 15px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; color: var(--gray); font-weight: 600; transition: 0.3s; }
+        .tray-item-aligned:hover { color: white; border-color: var(--accent); }
+        footer { padding: 40px var(--side-padding); text-align: center; border-top: 1px solid var(--border); color: var(--gray); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; }
+
+	.marquee-content a:hover {
+        color: #ff4d00 !important;
+        transform: scale(1.06);
+    }
+    
+    .marquee-content a:hover i {
+        color: #ff4d00 !important;
+        transform: scale(1.12);
+    }
+
+        @media (max-width: 1024px) {
+            .hero, .contact-aligned, .process-container { grid-template-columns: 1fr; }
+            .behance-slide { min-width: 85vw; height: 50vh; }
+            .hero-btns { flex-direction: column; align-items: center; gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">CHENURA</div>
+        <div class="nav-links">
+            <a href="#projects">Work</a>
+            <a href="#process">Process</a>
+            <a href="#behance-section">Archive</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+    <!-- Video Background (already on landing / hero) -->
+    <div class="video-bg-container">
+        <video autoplay muted loop playsinline>
+            <!-- Replace with public URL – local path won't work online -->
+            <source src="./bg2.mp4" type="video/mp4">
+            <!-- Recommended free alternatives (dark/abstract/tech loops): -->
+            <!-- https://cdn.pixabay.com/video/... (search pixabay "dark abstract") -->
+            <!-- https://videos.pexels.com/video-files/... (search pexels "abstract dark background loop") -->
+            <!-- https://mixkit.co/free-stock-video/abstract/... -->
+            <!-- Your current local file as fallback -->
+        </video>
+    </div>
+    <section class="hero">
+        <div class="hero-content">
+            <span class="tag-pill">Kalutara, Sri Lanka</span>
+            <h1 class="hero-title">
+                <span class="hero-row">CRAFT MODERN</span>
+                <span class="hero-row hero-accent" id="main-design">DESIGNS</span>
+            </h1>
+           
+            <div class="hero-btns">
+                <a href="#contact" class="btn-main btn-primary">Contact Us <i data-lucide="message-square"></i></a>
+                <a href="#projects" class="btn-main btn-secondary">View Projects <i data-lucide="arrow-down"></i></a>
+            </div>
+        </div>
+    </section>
+    <section id="projects" class="section-padding">
+        <div class="section-header">
+            <h2 class="latest-header">BEHANCE <span class="highlight">ARCHIVES</span></h2>
+        </div>
+        <div class="project-stack">
+            <div class="project-wrapper"><div class="project-card"><img src="./CryptoX.png" class="project-img"><div class="project-meta"><h3>CryptoX - Online Trading Platfom</h3></div></div></div>
+            <div class="project-wrapper"><div class="project-card"><img src="./Aiden.png" class="project-img"><div class="project-meta"><h3>Aiden - Bike Selling Platoform</h3></div></div></div>
+	    <div class="project-wrapper"><div class="project-card"><img src="./CryptoX.png" class="project-img"><div class="project-meta"><h3>CryptoX - Online Trading Platfom</h3></div></div></div>
+            <div class="project-wrapper"><div class="project-card"><img src="./Aiden.png" class="project-img"><div class="project-meta"><h3>Aiden - Bike Selling Platoform</h3></div></div></div>
+                </section>
+    <section id="process" class="process-section">
+        <div class="process-container">
+            <div class="process-sticky">
+                <h2>HOW THE <br>PROCESS <span class="highlight">WORKS</span></h2>
+            </div>
+            <div class="process-list">
+                <div class="process-card" data-process><span class="process-num">01</span><h4>Requirement Gathering</h4><p>Understanding client needs and project goals in detail.</p></div>
+                <div class="process-card" data-process><span class="process-num">02</span><h4>Wireframing</h4><p>Creating low-fidelity layouts and structure.</p></div>
+                <div class="process-card" data-process><span class="process-num">03</span><h4>High Fidelity</h4><p>Designing polished, detailed visual interfaces.</p></div>
+                <div class="process-card" data-process><span class="process-num">04</span><h4>Prototyping</h4><p>Building interactive models for testing.</p></div>
+                <div class="process-card" data-process><span class="process-num">05</span><h4>Review</h4><p>Feedback, iteration and final refinements.</p></div>
+            </div>
+        </div>
+    </section>
+    <div id="behance-section">
+        <section class="section-padding" style="padding-bottom: 0;">
+            <h2 class="latest-header">LATEST <span class="highlight">PROJECTS</span></h2>
+        </section>
+        <section class="behance-horizontal-section">
+            <div class="behance-track">
+
+                <!-- Project 1 -->
+                <div class="behance-slide">
+                    <img src="https://images.unsplash.com/photo-1541462608141-ad4d05945802?q=80&w=1000" alt="">
+                    <div class="project-buttons">
+                        <button class="btn-project btn-ui"
+                            data-images='[
+                                "https://images.unsplash.com/photo-1541462608141-ad4d05945802?q=80&w=1600",
+                                "https://images.unsplash.com/photo-1559028012-481c04fa702d?q=80&w=1600",
+                                "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=1600",
+                                "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1600",
+                                "https://images.unsplash.com/photo-1613909209432-7b1f596397ef?q=80&w=1600"
+                            ]'>
+                            Show UI
+                        </button>
+                        <a href="https://www.figma.com/proto/example-link-1" target="_blank" class="btn-project btn-proto show-proto-btn">Show Prototype</a>
+                    </div>
+                    <div class="behance-info-overlay"><h4>Aesthetic App</h4></div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="behance-slide">
+                    <img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1000" alt="">
+                    <div class="project-buttons">
+                        <button class="btn-project btn-ui"
+                            data-images='[
+                                "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1600",
+                                "https://images.unsplash.com/photo-1559028012-481c04fa702d?q=80&w=1600",
+                                "https://images.unsplash.com/photo-1613909209432-7b1f596397ef?q=80&w=1600",
+                                "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=1600",
+                                "https://images.unsplash.com/photo-1541462608141-ad4d05945802?q=80&w=1600"
+                            ]'>
+                            Show UI
+                        </button>
+                        <a href="https://www.figma.com/proto/example-link-2" target="_blank" class="btn-project btn-proto show-proto-btn">Show Prototype</a>
+                    </div>
+                    <div class="behance-info-overlay"><h4>Crypto Branding</h4></div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="behance-slide">
+                    <img src="https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=1000" alt="">
+                    <div class="project-buttons">
+                        <button class="btn-project btn-ui"
+                            data-images='["https://via.placeholder.com/1600x900/111/eee?text=UI+1","https://via.placeholder.com/1600x900/222/eee?text=UI+2","https://via.placeholder.com/1600x900/333/eee?text=UI+3","https://via.placeholder.com/1600x900/444/eee?text=UI+4","https://via.placeholder.com/1600x900/555/eee?text=UI+5"]'>
+                            Show UI
+                        </button>
+                        <a href="https://www.figma.com/proto/your-real-proto-3" target="_blank" class="btn-project btn-proto show-proto-btn">Show Prototype</a>
+                    </div>
+                    <div class="behance-info-overlay"><h4>Dashboard UI</h4></div>
+                </div>
+
+                <!-- Project 4 – new -->
+                <div class="behance-slide">
+                    <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?q=80&w=1000" alt="">
+                    <div class="project-buttons">
+                        <button class="btn-project btn-ui"
+                            data-images='["https://via.placeholder.com/1600x900/ff6600/000?text=Project+4+UI+1", "...", "...", "...", "..."]'>
+                            Show UI
+                        </button>
+                        <a href="https://your-prototype-link-4.com" target="_blank" class="btn-project btn-proto show-proto-btn">Show Prototype</a>
+                    </div>
+                    <div class="behance-info-overlay"><h4>Finance Mobile</h4></div>
+                </div>
+
+                <!-- Project 5 – new -->
+                <div class="behance-slide">
+                    <img src="https://images.unsplash.com/photo-1613909209432-7b1f596397ef?q=80&w=1000" alt="">
+                    <div class="project-buttons">
+                        <button class="btn-project btn-ui"
+                            data-images='["https://via.placeholder.com/1600x900/0066ff/fff?text=E-comm+1", "...", "...", "...", "..."]'>
+                            Show UI
+                        </button>
+                        <a href="https://your-prototype-link-5.com" target="_blank" class="btn-project btn-proto show-proto-btn">Show Prototype</a>
+                    </div>
+                    <div class="behance-info-overlay"><h4>Fitness Tracker</h4></div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <!-- ── IMAGE MODAL ── -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeImageModal">&times;</span>
+            <div class="slider-wrapper">
+                <div class="arrow prev" id="prevSlide">&#10094;</div>
+                <div class="slides" id="slidesContainer"></div>
+                <div class="arrow next" id="nextSlide">&#10095;</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── PROTOTYPE MODAL ── -->
+    <div id="prototypeModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeProtoModal">&times;</span>
+            <iframe id="protoIframe" src="" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <section class="social-marquee-section">
+    <div class="social-header-main">
+        <center>
+            <span class="tag-pill">Get in Touch</span>
+        </center>
+        <h2>LET'S <span class="highlight">CONNECT</span></h2>
+    </div>
+
+    <div class="marquee-track">
+        <div class="marquee-content" id="marquee-pin" style="display: flex; align-items: center; gap: 90px; padding-left: 12vw; padding-right: 12vw; white-space: nowrap;">
+
+            <a href="https://www.linkedin.com/in/your-real-profile" target="_blank" rel="noopener noreferrer"
+               style="display: inline-flex; align-items: center; gap: 16px; color: white; text-decoration: none; font-size: clamp(1.9rem, 5vw, 3.8rem); font-weight: 900; text-transform: uppercase; transition: all 0.35s ease;">
+                <i class="fa-brands fa-linkedin" style="font-size: clamp(2.4rem, 6.5vw, 4.8rem); color: white; transition: all 0.35s ease;"></i>
+                LINKEDIN •
+            </a>
+
+            <a href="https://behance.net/your-username" target="_blank" rel="noopener noreferrer"
+               style="display: inline-flex; align-items: center; gap: 16px; color: white; text-decoration: none; font-size: clamp(1.9rem, 5vw, 3.8rem); font-weight: 900; text-transform: uppercase; transition: all 0.35s ease;">
+                <i class="fa-brands fa-behance" style="font-size: clamp(2.4rem, 6.5vw, 4.8rem); color: white; transition: all 0.35s ease;"></i>
+                BEHANCE •
+            </a>
+
+            <a href="https://www.instagram.com/yourusername" target="_blank" rel="noopener noreferrer"
+               style="display: inline-flex; align-items: center; gap: 16px; color: white; text-decoration: none; font-size: clamp(1.9rem, 5vw, 3.8rem); font-weight: 900; text-transform: uppercase; transition: all 0.35s ease;">
+                <i class="fa-brands fa-instagram" style="font-size: clamp(2.4rem, 6.5vw, 4.8rem); color: white; transition: all 0.35s ease;"></i>
+                INSTAGRAM •
+            </a>
+
+            <a href="mailto:hello@yourdomain.com"
+               style="display: inline-flex; align-items: center; gap: 16px; color: white; text-decoration: none; font-size: clamp(1.9rem, 5vw, 3.8rem); font-weight: 900; text-transform: uppercase; transition: all 0.35s ease;">
+                <i class="fa-solid fa-envelope" style="font-size: clamp(2.4rem, 6.5vw, 4.8rem); color: white; transition: all 0.35s ease;"></i>
+                EMAIL •
+            </a>
+
+        </div>
+    </div>
+</section>
+
+    <section id="contact" class="contact-aligned">
+        <div class="contact-left-align">
+            <h2>HAVE AN<br><span class="highlight">IDEA?</span></h2>
+        </div>
+        <div class="contact-right-align">
+            <p>Let’s build something extraordinary together.</p>
+            <div class="cta-aligned-group">
+                <button class="action-btn-aligned primary" id="contactBtn">
+                    Contact Us <i data-lucide="plus" id="btnIcon"></i>
+                </button>
+                <div class="contact-tray-aligned" id="contactTray">
+                    <a href="mailto:chenura55@gmail.com" class="tray-item-aligned">Email Me <i data-lucide="mail"></i></a>
+                    <a href="https://wa.me/94760679872" target="_blank" class="tray-item-aligned">WhatsApp <i data-lucide="message-circle"></i></a>
+                </div>
+                <a href="resume.pdf" download class="action-btn-aligned">
+                    Download Resume <i data-lucide="download"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    <footer>© 2026 UI/UX PORTFOLIO • SRI LANKA</footer>
+    <script>
+        lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
+        // Contact toggle
+        const contactBtn = document.getElementById('contactBtn');
+        const tray = document.getElementById('contactTray');
+        const icon = document.getElementById('btnIcon');
+        if (contactBtn) {
+            contactBtn.addEventListener('click', () => {
+                tray.classList.toggle('open');
+                gsap.to(icon, { rotation: tray.classList.contains('open') ? 45 : 0, duration: 0.3 });
+            });
+        }
+        // Flying text animation
+        function initFlyingText() {
+            const origin = document.querySelector('#main-design');
+            const target = document.querySelector('#target-design');
+            if (!origin || !target) return;
+            const originRect = origin.getBoundingClientRect();
+            const targetRect = target.getBoundingClientRect();
+            gsap.to(origin, {
+                scrollTrigger: { trigger: "#projects", start: "top bottom", end: "top 20%", scrub: 1 },
+                x: targetRect.left - originRect.left,
+                y: targetRect.top - originRect.top,
+                scale: targetRect.width / originRect.width,
+                color: "#ff4d00",
+                ease: "none"
+            });
+        }
+        // Project stacking
+        gsap.utils.toArray('.project-wrapper').forEach((wrapper, i, arr) => {
+            if (i < arr.length - 1) {
+                gsap.to(wrapper.querySelector('.project-card'), {
+                    scale: 0.9, opacity: 0.5,
+                    scrollTrigger: { trigger: wrapper, start: "top top", end: "bottom top", scrub: true }
+                });
+            }
+        });
+        // Process reveal
+        gsap.utils.toArray('[data-process]').forEach((card) => {
+            gsap.to(card, {
+                scrollTrigger: { trigger: card, start: "top 85%", end: "top 45%", scrub: true },
+                opacity: 1, scale: 1, y: 0,
+                backgroundColor: "rgba(255, 77, 0, 0.03)",
+                borderColor: "rgba(255, 77, 0, 0.3)"
+            });
+        });
+        // Behance horizontal + lift
+        const behanceTrack = document.querySelector(".behance-track");
+        if (behanceTrack) {
+            const slides = gsap.utils.toArray(".behance-slide");
+            let behanceTween = gsap.to(behanceTrack, {
+                x: () => -(behanceTrack.scrollWidth - window.innerWidth),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".behance-horizontal-section",
+                    pin: true,
+                    scrub: 1,
+                    end: () => "+=" + behanceTrack.scrollWidth,
+                    invalidateOnRefresh: true
+                }
+            });
+            slides.forEach((slide) => {
+                gsap.to(slide, {
+                    y: 0, opacity: 1,
+                    scrollTrigger: {
+                        containerAnimation: behanceTween,
+                        trigger: slide,
+                        start: "left 80%",
+                        end: "left 20%",
+                        scrub: true
+                    }
+                });
+            });
+        }
+
+        // ── NEW: Modal & Slider Logic ──
+        const imageModal   = document.getElementById("imageModal");
+        const protoModal   = document.getElementById("prototypeModal");
+        const slidesContainer = document.getElementById("slidesContainer");
+        const prevBtn      = document.getElementById("prevSlide");
+        const nextBtn      = document.getElementById("nextSlide");
+        const closeImage   = document.getElementById("closeImageModal");
+        const closeProto   = document.getElementById("closeProtoModal");
+
+        let currentSlide = 0;
+        let currentImages = [];
+
+        function openImageModal(images) {
+            currentImages = images;
+            currentSlide = 0;
+            renderSlides();
+            imageModal.style.display = "flex";
+        }
+
+        function renderSlides() {
+            slidesContainer.innerHTML = "";
+            currentImages.forEach(src => {
+                const div = document.createElement("div");
+                div.className = "slide";
+                div.innerHTML = `<img src="${src}" alt="UI Screen">`;
+                slidesContainer.appendChild(div);
+            });
+            goToSlide(0);
+        }
+
+        function goToSlide(index) {
+            currentSlide = (index + currentImages.length) % currentImages.length;
+            slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        prevBtn.addEventListener("click", () => goToSlide(currentSlide - 1));
+        nextBtn.addEventListener("click", () => goToSlide(currentSlide + 1));
+
+        // ── Event Listeners ──
+        document.querySelectorAll(".btn-ui").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const images = JSON.parse(btn.dataset.images);
+                openImageModal(images);
+            });
+        });
+
+        document.querySelectorAll(".show-proto-btn").forEach(link => {
+            link.addEventListener("click", (e) => {
+                e.preventDefault();
+                const url = link.href;
+                document.getElementById("protoIframe").src = url;
+                protoModal.style.display = "flex";
+            });
+        });
+
+        closeImage.onclick = () => { imageModal.style.display = "none"; };
+        closeProto.onclick = () => { 
+            protoModal.style.display = "none"; 
+            document.getElementById("protoIframe").src = ""; // stop loading
+        };
+
+        // Close when clicking outside content
+        window.onclick = function(e) {
+            if (e.target === imageModal) imageModal.style.display = "none";
+            if (e.target === protoModal) {
+                protoModal.style.display = "none";
+                document.getElementById("protoIframe").src = "";
+            }
+        };
+        
+        // Marquee
+        const marqueeElement = document.querySelector("#marquee-pin");
+        if (marqueeElement) {
+            gsap.to(marqueeElement, {
+                x: () => -(marqueeElement.scrollWidth - (window.innerWidth * 0.7)),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".social-marquee-section",
+                    start: "top top",
+                    end: () => "+=" + marqueeElement.scrollWidth,
+                    scrub: 1, pin: true
+                }
+            });
+        }
+        window.addEventListener('load', initFlyingText);
+        window.addEventListener('resize', () => ScrollTrigger.refresh());
+    </script>
+</body>
+</html>
